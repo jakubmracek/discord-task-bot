@@ -1,7 +1,48 @@
 // index.js – hlavní soubor Discord bota
 require('dotenv').config();
-const { Client, GatewayIntentBits, EmbedBuilder } = require('discord.js');
+const { Client, GatewayIntentBits, EmbedBuilder, SlashCommandBuilder } = require('discord.js');
+const { REST, Routes } = require('@discordjs/rest');
 const cron = require('node-cron');
+
+// ── Automatická registrace slash commandů při startu ──────────────────────────
+async function registerCommands() {
+  const AREAS = ['Administrativa', 'Pedagogika', 'Komunikace', 'Provoz', 'Ostatní'];
+
+  const commands = [
+    new SlashCommandBuilder()
+      .setName('task').setDescription('Přidá nový úkol')
+      .addStringOption(o => o.setName('nazev').setDescription('Co je potřeba udělat').setRequired(true))
+      .addUserOption(o => o.setName('pro').setDescription('Komu úkol přiřadit').setRequired(true))
+      .addStringOption(o => o.setName('oblast').setDescription('Oblast/téma').setRequired(true)
+        .addChoices(...AREAS.map(a => ({ name: a, value: a }))))
+      .addStringOption(o => o.setName('priorita').setDescription('Priorita').setRequired(true)
+        .addChoices(
+          { name: '🔴 Vysoká', value: 'high' },
+          { name: '🟡 Střední', value: 'medium' },
+          { name: '🟢 Nízká', value: 'low' },
+        ))
+      .addStringOption(o => o.setName('deadline').setDescription('Termín (DD.MM.YYYY)').setRequired(false)),
+    new SlashCommandBuilder().setName('done').setDescription('Označí úkol jako hotový')
+      .addIntegerOption(o => o.setName('id').setDescription('ID úkolu').setRequired(true)),
+    new SlashCommandBuilder().setName('progress').setDescription('Označí úkol jako "probíhá"')
+      .addIntegerOption(o => o.setName('id').setDescription('ID úkolu').setRequired(true)),
+    new SlashCommandBuilder().setName('mytasks').setDescription('Zobrazí tvoje aktuální úkoly'),
+    new SlashCommandBuilder().setName('tasks').setDescription('Přehled všech otevřených úkolů')
+      .addStringOption(o => o.setName('oblast').setDescription('Filtrovat podle oblasti').setRequired(false)
+        .addChoices(...AREAS.map(a => ({ name: a, value: a })))),
+  ];
+
+  const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
+  try {
+    await rest.put(
+      Routes.applicationGuildCommands(process.env.DISCORD_CLIENT_ID, process.env.DISCORD_GUILD_ID),
+      { body: commands.map(c => c.toJSON()) },
+    );
+    console.log('✅ Slash commandy zaregistrovány.');
+  } catch (err) {
+    console.error('❌ Chyba při registraci commandů:', err);
+  }
+}
 
 const { initSheet, appendTask, updateTaskStatus, getTasksByUser, getTasksDueTomorrow, getTasksByArea } = require('./sheets');
 const { notifyAssigned, notifyDeadlineTomorrow, notifyStatusChange } = require('./notifier');
@@ -36,6 +77,7 @@ const client = new Client({
 
 client.once('ready', async () => {
   console.log(`✅ Bot přihlášen jako ${client.user.tag}`);
+  await registerCommands();
   await initSheet();
   console.log('✅ Sheet zkontrolován.');
 });
