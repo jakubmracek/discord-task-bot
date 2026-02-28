@@ -1,7 +1,8 @@
 // index.js – hlavní soubor Discord bota
 require('dotenv').config();
 const { Client, GatewayIntentBits, EmbedBuilder, SlashCommandBuilder } = require('discord.js');
-const { REST, Routes } = require('@discordjs/rest');
+const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord-api-types/v10');
 const cron = require('node-cron');
 
 // ── Automatická registrace slash commandů při startu ──────────────────────────
