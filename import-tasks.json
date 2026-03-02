@@ -2,7 +2,7 @@
   {
     "title": "Udělat kalendář s Míšou",
     "assigneeName": "Lída",
-    "assigneeId": "@lidamrackova",
+    "assigneeId": "1463687717534695677",
     "area": "Administrativa",
     "priority": "medium",
     "deadline": "",
@@ -11,7 +11,7 @@
   {
     "title": "Přestěhování čtecí místnosti + pytel od Lucky + vybavení",
     "assigneeName": "Lída",
-    "assigneeId": "@lidamrackova",
+    "assigneeId": "1463687717534695677",
     "area": "Provoz",
     "priority": "medium",
     "deadline": "",
@@ -20,7 +20,7 @@
   {
     "title": "Půjčování běžek jako faktura na pronájem (s Lindou)",
     "assigneeName": "Lída",
-    "assigneeId": "@lidamrackova",
+    "assigneeId": "1463687717534695677",
     "area": "Administrativa",
     "priority": "medium",
     "deadline": "",
@@ -29,7 +29,7 @@
   {
     "title": "Připravit dokument k odchodu a příchodu nových žáků (klíče, čip, rituál, anděl strážný)",
     "assigneeName": "Lída",
-    "assigneeId": "@lidamrackova",
+    "assigneeId": "1463687717534695677",
     "area": "Administrativa",
     "priority": "medium",
     "deadline": "",
@@ -38,7 +38,7 @@
   {
     "title": "Zajistit divadlo Lusk",
     "assigneeName": "Lída",
-    "assigneeId": "@lidamrackova",
+    "assigneeId": "1463687717534695677",
     "area": "Provoz",
     "priority": "medium",
     "deadline": "2026-03-27",
@@ -47,7 +47,7 @@
   {
     "title": "Přidat tatínka Tamarky do WhatsApp skupiny",
     "assigneeName": "Lída",
-    "assigneeId": "@lidamrackova",
+    "assigneeId": "1463687717534695677",
     "area": "Komunikace",
     "priority": "low",
     "deadline": "",
@@ -56,7 +56,7 @@
   {
     "title": "Dojednat schůzku s rodiči Natálky",
     "assigneeName": "Jakub",
-    "assigneeId": "@jakubmracek",
+    "assigneeId": "814455363327623168",
     "area": "Komunikace",
     "priority": "high",
     "deadline": "",
@@ -65,10 +65,10 @@
   {
     "title": "Sesbírat návrhy od dětí i průvodců (co potřebujeme dělat + vybavení)",
     "assigneeName": "Jakub",
-    "assigneeId": "@jakubmracek",
+    "assigneeId": "814455363327623168",
     "area": "Pedagogika",
     "priority": "medium",
     "deadline": "",
     "createdByName": "Jakub"
-  },
+  }
 ]
