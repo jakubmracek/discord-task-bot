@@ -31,6 +31,7 @@ async function registerCommands() {
     new SlashCommandBuilder().setName('tasks').setDescription('Přehled všech otevřených úkolů')
       .addStringOption(o => o.setName('oblast').setDescription('Filtrovat podle oblasti').setRequired(false)
         .addChoices(...AREAS.map(a => ({ name: a, value: a })))),
+    new SlashCommandBuilder().setName('import').setDescription('Hromadný import úkolů z import-tasks.json (pouze admin)'),
   ];
 
   const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
@@ -267,6 +268,48 @@ client.on('interactionCreate', async (interaction) => {
     return;
   }
 });
+
+  // ── /import ───────────────────────────────────────────────────────────────
+  if (commandName === 'import') {
+    // Pouze admin (Jakub) může spustit import
+    const ADMIN_ID = process.env.DISCORD_ADMIN_ID;
+    if (ADMIN_ID && interaction.user.id !== ADMIN_ID) {
+      await interaction.reply({ content: '❌ Na tento příkaz nemáš oprávnění.', ephemeral: true });
+      return;
+    }
+
+    await interaction.deferReply();
+
+    let tasks;
+    try {
+      tasks = JSON.parse(require('fs').readFileSync('./import-tasks.json', 'utf-8'));
+    } catch (err) {
+      await interaction.editReply('❌ Nepodařilo se načíst import-tasks.json: ' + err.message);
+      return;
+    }
+
+    await interaction.editReply(`⏳ Importuji ${tasks.length} úkolů...`);
+
+    let ok = 0;
+    let fail = 0;
+    const errors = [];
+
+    for (const task of tasks) {
+      try {
+        await appendTask(task);
+        ok++;
+        await new Promise(r => setTimeout(r, 500));
+      } catch (err) {
+        fail++;
+        errors.push(task.title);
+      }
+    }
+
+    const summary = `✅ Import dokončen: **${ok} úspěšně**, ${fail > 0 ? `**${fail} chyb**` : '0 chyb'}.`;
+    const errorList = errors.length ? '\n\nChyby:\n' + errors.map(t => `• ${t}`).join('\n') : '';
+    await interaction.editReply(summary + errorList);
+    return;
+  }
 
 // ── CRON: Každý den v 8:00 – upomínky na zítřejší deadliny ───────────────────
 // Timezone: Europe/Prague
