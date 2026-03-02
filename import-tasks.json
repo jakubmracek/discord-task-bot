@@ -1,0 +1,74 @@
+[
+  {
+    "title": "Udělat kalendář s Míšou",
+    "assigneeName": "Lída",
+    "assigneeId": "@lidamrackova",
+    "area": "Administrativa",
+    "priority": "medium",
+    "deadline": "",
+    "createdByName": "Jakub"
+  },
+  {
+    "title": "Přestěhování čtecí místnosti + pytel od Lucky + vybavení",
+    "assigneeName": "Lída",
+    "assigneeId": "@lidamrackova",
+    "area": "Provoz",
+    "priority": "medium",
+    "deadline": "",
+    "createdByName": "Jakub"
+  },
+  {
+    "title": "Půjčování běžek jako faktura na pronájem (s Lindou)",
+    "assigneeName": "Lída",
+    "assigneeId": "@lidamrackova",
+    "area": "Administrativa",
+    "priority": "medium",
+    "deadline": "",
+    "createdByName": "Jakub"
+  },
+  {
+    "title": "Připravit dokument k odchodu a příchodu nových žáků (klíče, čip, rituál, anděl strážný)",
+    "assigneeName": "Lída",
+    "assigneeId": "@lidamrackova",
+    "area": "Administrativa",
+    "priority": "medium",
+    "deadline": "",
+    "createdByName": "Jakub"
+  },
+  {
+    "title": "Zajistit divadlo Lusk",
+    "assigneeName": "Lída",
+    "assigneeId": "@lidamrackova",
+    "area": "Provoz",
+    "priority": "medium",
+    "deadline": "2026-03-27",
+    "createdByName": "Jakub"
+  },
+  {
+    "title": "Přidat tatínka Tamarky do WhatsApp skupiny",
+    "assigneeName": "Lída",
+    "assigneeId": "@lidamrackova",
+    "area": "Komunikace",
+    "priority": "low",
+    "deadline": "",
+    "createdByName": "Jakub"
+  },
+  {
+    "title": "Dojednat schůzku s rodiči Natálky",
+    "assigneeName": "Jakub",
+    "assigneeId": "@jakubmracek",
+    "area": "Komunikace",
+    "priority": "high",
+    "deadline": "",
+    "createdByName": "Jakub"
+  },
+  {
+    "title": "Sesbírat návrhy od dětí i průvodců (co potřebujeme dělat + vybavení)",
+    "assigneeName": "Jakub",
+    "assigneeId": "@jakubmracek",
+    "area": "Pedagogika",
+    "priority": "medium",
+    "deadline": "",
+    "createdByName": "Jakub"
+  },
+]
