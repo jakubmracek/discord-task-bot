@@ -1,73 +1,28 @@
 [
   {
-    "title": "Udělat kalendář s Míšou",
-    "assigneeName": "Lída",
-    "assigneeId": "1463687717534695677",
-    "area": "Administrativa",
-    "priority": "medium",
-    "deadline": "",
-    "createdByName": "Jakub"
-  },
-  {
-    "title": "Přestěhování čtecí místnosti + pytel od Lucky + vybavení",
-    "assigneeName": "Lída",
-    "assigneeId": "1463687717534695677",
-    "area": "Provoz",
-    "priority": "medium",
-    "deadline": "",
-    "createdByName": "Jakub"
-  },
-  {
-    "title": "Půjčování běžek jako faktura na pronájem (s Lindou)",
-    "assigneeName": "Lída",
-    "assigneeId": "1463687717534695677",
-    "area": "Administrativa",
-    "priority": "medium",
-    "deadline": "",
-    "createdByName": "Jakub"
-  },
-  {
-    "title": "Připravit dokument k odchodu a příchodu nových žáků (klíče, čip, rituál, anděl strážný)",
-    "assigneeName": "Lída",
-    "assigneeId": "1463687717534695677",
-    "area": "Administrativa",
-    "priority": "medium",
-    "deadline": "",
-    "createdByName": "Jakub"
-  },
-  {
-    "title": "Zajistit divadlo Lusk",
-    "assigneeName": "Lída",
-    "assigneeId": "1463687717534695677",
-    "area": "Provoz",
-    "priority": "medium",
-    "deadline": "2026-03-27",
-    "createdByName": "Jakub"
-  },
-  {
-    "title": "Přidat tatínka Tamarky do WhatsApp skupiny",
-    "assigneeName": "Lída",
-    "assigneeId": "1463687717534695677",
-    "area": "Komunikace",
-    "priority": "low",
-    "deadline": "",
-    "createdByName": "Jakub"
-  },
-  {
-    "title": "Dojednat schůzku s rodiči Natálky",
+    "title": "Domluvit se s Janou – evidence sickdays a zástupů",
     "assigneeName": "Jakub",
     "assigneeId": "814455363327623168",
-    "area": "Komunikace",
+    "area": "Administrativa",
+    "priority": "medium",
+    "deadline": "",
+    "createdByName": "Jakub"
+  },
+  {
+    "title": "Vytvořit informace a postup pro nový personál / dobrovolníky",
+    "assigneeName": "Jakub",
+    "assigneeId": "814455363327623168",
+    "area": "Administrativa",
     "priority": "high",
-    "deadline": "",
+    "deadline": "2026-02-16",
     "createdByName": "Jakub"
   },
   {
-    "title": "Sesbírat návrhy od dětí i průvodců (co potřebujeme dělat + vybavení)",
-    "assigneeName": "Jakub",
-    "assigneeId": "814455363327623168",
-    "area": "Pedagogika",
-    "priority": "medium",
+    "title": "Dořešit notifikace na Discordu",
+    "assigneeName": "Jana",
+    "assigneeId": "1463629187645571082",
+    "area": "Provoz",
+    "priority": "low",
     "deadline": "",
     "createdByName": "Jakub"
   }
