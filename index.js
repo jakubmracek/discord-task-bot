@@ -267,11 +267,8 @@ client.on('interactionCreate', async (interaction) => {
     await interaction.editReply({ embeds: [embed] });
     return;
   }
-});
-
   // ── /import ───────────────────────────────────────────────────────────────
   if (commandName === 'import') {
-    // Pouze admin (Jakub) může spustit import
     const ADMIN_ID = process.env.DISCORD_ADMIN_ID;
     if (ADMIN_ID && interaction.user.id !== ADMIN_ID) {
       await interaction.reply({ content: '❌ Na tento příkaz nemáš oprávnění.', ephemeral: true });
@@ -310,6 +307,7 @@ client.on('interactionCreate', async (interaction) => {
     await interaction.editReply(summary + errorList);
     return;
   }
+});
 
 // ── CRON: Každý den v 8:00 – upomínky na zítřejší deadliny ───────────────────
 // Timezone: Europe/Prague
