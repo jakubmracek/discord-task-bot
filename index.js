@@ -46,7 +46,7 @@ async function registerCommands() {
   }
 }
 
-const { initSheet, appendTask, updateTaskStatus, getTasksByUser, getTasksDueTomorrow, getTasksByArea } = require('./sheets');
+const { initSheet, appendTask, updateTaskStatus, updateTaskMessageId, getTaskByMessageId, getTasksByUser, getTasksDueTomorrow, getTasksByArea } = require('./sheets');
 const { notifyAssigned, notifyDeadlineTomorrow, notifyStatusChange } = require('./notifier');
 
 // ── Pomocné funkce ─────────────────────────────────────────────────────────────
@@ -74,7 +74,11 @@ const PRIORITY_COLOR = { high: 0xE74C3C, medium: 0xF39C12, low: 0x2ECC71 };
 
 // ── Inicializace klienta ──────────────────────────────────────────────────────
 const client = new Client({
-  intents: [GatewayIntentBits.Guilds],
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessageReactions,
+  ],
+  partials: ['MESSAGE', 'REACTION'],  // nutné pro reakce na starší zprávy
 });
 
 client.once('ready', async () => {
@@ -135,7 +139,14 @@ client.on('interactionCreate', async (interaction) => {
       .setFooter({ text: `Zadal: ${task.createdByName}` })
       .setTimestamp();
 
-    await interaction.editReply({ embeds: [embed] });
+    const sentMessage = await interaction.editReply({ embeds: [embed] });
+
+    // Uložíme message ID do Sheetu pro pozdější identifikaci přes reakci
+    try {
+      await updateTaskMessageId(taskId, sentMessage.id);
+    } catch (err) {
+      console.error('⚠️ Nepodařilo se uložit message ID:', err.message);
+    }
 
     // Pošleme DM přiřazené osobě
     await notifyAssigned(client, task, taskId);
@@ -306,6 +317,44 @@ client.on('interactionCreate', async (interaction) => {
     const errorList = errors.length ? '\n\nChyby:\n' + errors.map(t => `• ${t}`).join('\n') : '';
     await interaction.editReply(summary + errorList);
     return;
+  }
+});
+
+// ── Reakce ✅ na zprávu bota = označení úkolu jako hotového ──────────────────
+client.on('messageReactionAdd', async (reaction, user) => {
+  // Ignoruj bota samotného
+  if (user.bot) return;
+
+  // Načti částečná data pokud jsou potřeba
+  if (reaction.partial) {
+    try { await reaction.fetch(); } catch (err) { return; }
+  }
+  if (reaction.message.partial) {
+    try { await reaction.message.fetch(); } catch (err) { return; }
+  }
+
+  // Reaguj jen na ✅ a jen na zprávy bota
+  if (reaction.emoji.name !== '✅') return;
+  if (reaction.message.author?.id !== client.user?.id) return;
+
+  try {
+    const row = await getTaskByMessageId(reaction.message.id);
+    if (!row) return; // zpráva není úkol
+
+    const taskId = row[0];
+    const currentStatus = row[6];
+    if (currentStatus === 'done') return; // už hotovo
+
+    const originalRow = await updateTaskStatus(taskId, 'done');
+    const changedBy = user.displayName || user.username;
+
+    console.log(`✅ Úkol #${taskId} označen jako hotový přes reakci (${changedBy})`);
+    await notifyStatusChange(client, originalRow, 'done', changedBy);
+
+    // Potvrzení v kanálu
+    await reaction.message.reply(`✅ Úkol **#${taskId} – ${row[1]}** označen jako hotový! (${changedBy})`);
+  } catch (err) {
+    console.error('❌ Chyba při zpracování reakce:', err.message);
   }
 });
 

@@ -183,6 +183,44 @@ function rowToTask(row) {
   };
 }
 
+// ── Uložení Discord message ID zpět do Sheetu ────────────────────────────────
+async function updateTaskMessageId(taskId, messageId) {
+  const auth = getAuth();
+  const sheets = google.sheets({ version: 'v4', auth });
+
+  const res = await sheets.spreadsheets.values.get({
+    spreadsheetId: process.env.SHEET_ID,
+    range: `${process.env.SHEET_NAME}!A:A`,
+  });
+
+  const rows = res.data.values || [];
+  const rowIndex = rows.findIndex(r => String(r[0]) === String(taskId));
+  if (rowIndex === -1) return;
+
+  const sheetRow = rowIndex + 1;
+  await sheets.spreadsheets.values.update({
+    spreadsheetId: process.env.SHEET_ID,
+    range: `${process.env.SHEET_NAME}!K${sheetRow}`,
+    valueInputOption: 'RAW',
+    requestBody: { values: [[messageId]] },
+  });
+}
+
+// ── Najít úkol podle Discord message ID (sloupec K) ───────────────────────────
+async function getTaskByMessageId(messageId) {
+  const auth = getAuth();
+  const sheets = google.sheets({ version: 'v4', auth });
+
+  const res = await sheets.spreadsheets.values.get({
+    spreadsheetId: process.env.SHEET_ID,
+    range: `${process.env.SHEET_NAME}!A:K`,
+  });
+
+  const rows = res.data.values || [];
+  const row = rows.slice(1).find(r => r[COLUMNS.MESSAGE_LINK] === messageId);
+  return row || null;
+}
+
 module.exports = {
   initSheet,
   appendTask,
@@ -190,4 +228,6 @@ module.exports = {
   getTasksByUser,
   getTasksDueTomorrow,
   getTasksByArea,
+  updateTaskMessageId,
+  getTaskByMessageId,
 };
